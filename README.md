@@ -28,6 +28,7 @@ It has different modes for different tasks:
 - Deepseek
 - Groq
 - Local LLMs using Ollama
+- AWS Bedrock
 
 
 ## Tools Used
@@ -79,9 +80,24 @@ Specify the LLM and model to use alongside with appropriate API keys in the `.en
 ```bash
 GOOGLE_API_KEY="..."
 TIG_MODEL="gemini-2.0-flash"
-TIG_PROVIDER="google" # available providers: [google, openai, anthropic, deepseek, groq, ollama, openrouter]
+TIG_PROVIDER="google" # available providers: [google, openai, anthropic, deepseek, groq, ollama, openrouter, bedrock]
 ```
 Provide the right API key variable for the right model e.g. `GOOGLE_API_KEY` for Gemini, `OPENAI_API_KEY` for OpenAI, `ANTHROPIC_API_KEY` for Claude, etc.
+
+For AWS Bedrock, you can either use AWS access keys:
+```bash
+AWS_ACCESS_KEY_ID="..."
+AWS_SECRET_ACCESS_KEY="..."
+TIG_PROVIDER="bedrock"
+TIG_MODEL="anthropic.claude-3-haiku-20240307-v1:0" # or any other Bedrock model
+```
+
+Or use AWS SSO profiles:
+```bash
+AWS_PROFILE="your-profile-name"
+TIG_PROVIDER="bedrock"
+TIG_MODEL="anthropic.claude-3-haiku-20240307-v1:0" # or any other Bedrock model
+```
 
 Now run tig (optionally specify the mode `--mode <code| architect>`):
 ```bash

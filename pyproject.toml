@@ -29,6 +29,7 @@ dependencies = [
     "llama-index-llms-groq>=0.3.1",
     "llama-index-llms-openrouter>=0.3.1",
     "llama-index-llms-deepseek>=0.1.1",
+    "llama-index-llms-bedrock>=0.3.8",
 ]
 
 [project.scripts]
