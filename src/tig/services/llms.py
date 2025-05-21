@@ -14,6 +14,7 @@ SUPPORTED_PROVIDERS = [
     "ollama",
     "groq",
     "openrouter",
+    "bedrock",
 ]
 
 DEFAULT_PROVIDER = "google"
@@ -99,6 +100,32 @@ def get_llm() -> tuple[LLM, str, str]:
             if model_name
             else OpenRouter(model="google/gemini-2.0-flash-001")
         )
+        return llm, provider, llm.model
+
+    if provider == "bedrock":
+        from llama_index.llms.bedrock import Bedrock
+        
+        # Get AWS profile if provided
+        aws_profile = os.getenv("AWS_PROFILE")
+        
+        # Default model if none provided
+        default_bedrock_model = "anthropic.claude-3-haiku-20240307-v1:0"
+        
+        if aws_profile:
+            # Use SSO profile authentication
+            llm = (
+                Bedrock(model=model_name, aws_profile=aws_profile)
+                if model_name
+                else Bedrock(model=default_bedrock_model, aws_profile=aws_profile)
+            )
+        else:
+            # Use access key authentication (credentials from environment variables)
+            llm = (
+                Bedrock(model=model_name)
+                if model_name
+                else Bedrock(model=default_bedrock_model)
+            )
+        
         return llm, provider, llm.model
 
     else:
